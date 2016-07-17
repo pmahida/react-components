@@ -28,12 +28,12 @@ export default class Typeahead extends Component {
 		this.setState({searchString:event.target.value});
 	}
 
-	render(
+	render() {
 		return (
 			<div>
 				<input type="text" className="form-control" onChange={this.handleChange.bind(this)} />
-				<DataList dataItems={dataItems} labelField="label" />
+				<DataList dataItems={dataItems} labelField="label" searchString={this.state.searchString} />
 			</div>
 		);
-	)
+	}
 }
