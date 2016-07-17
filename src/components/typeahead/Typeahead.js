@@ -19,20 +19,51 @@ export default class Typeahead extends Component {
 		super(props,context);
 
 		this.state = {
-			searchString : ""
+			searchString : "",
+			dataItems:dataItems
 		}
+
+		this.filterDataItems = this.filterDataItems.bind(this);
+		this.defaultFilterFunction = this.defaultFilterFunction.bind(this);
+
 	}
 
 	handleChange(event) {
-		console.log( " input value = " + event.target.value);
-		this.setState({searchString:event.target.value});
+		var searchString = event.target.value;
+		if(searchString != undefined && searchString != "") {
+			this.filterDataItems();
+		}		
+		this.setState({searchString: searchString})
+	}
+
+	filterDataItems() {
+		var filteredData = [];
+		if(this.state.dataItems != undefined && this.state.dataItems.length > 0) {
+			if( this.props.filterFunction) {
+				filteredData = this.state.dataItems.filter(this.props.filterFunction)
+			}else {
+				filteredData = this.state.dataItems.filter(this.defaultFilterFunction);
+			}
+		}
+	
+		this.setState({dataItems:filteredData});
+
+	}
+
+	defaultFilterFunction(item) {
+		if(item != undefined && item.hasOwnProperty("label")) {
+			var searchString = this.refs.textInput.value; 
+			if(String(item["label"]).indexOf(searchString) >= 0) {
+				return item;
+			}	
+		}
 	}
 
 	render() {
 		return (
 			<div>
-				<input type="text" className="form-control" onChange={this.handleChange.bind(this)} />
-				<DataList dataItems={dataItems} labelField="label" searchString={this.state.searchString} />
+				<input ref="textInput" type="text" className="form-control" onChange={this.handleChange.bind(this)} />
+				<DataList dataItems={this.state.dataItems} labelField="label" searchString={this.state.searchString} />
 			</div>
 		);
 	}

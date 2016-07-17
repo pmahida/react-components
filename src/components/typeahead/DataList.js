@@ -8,9 +8,6 @@ export default class DataList extends Component {
 		this.state = {
 			dataItems:this.props.dataItems
 		}
-
-		this.filterDataItems = this.filterDataItems.bind(this);
-		this.defaultFilterFunction = this.defaultFilterFunction.bind(this);
 	}
 
 	componentWillMount() {
@@ -24,37 +21,18 @@ export default class DataList extends Component {
 		this.setState({isDynamic,dataItems,searchString});	
 		
 		if(searchString != "") {
-			this.filterDataItems(dataItems);
+			if(this.props.isDynamic) {
+				this.props.fetchDataItems();
+			}
 		}		
 		
 	}
 
-	filterDataItems(dataItems) {
-		var filteredData = [];
-		if(dataItems != undefined && dataItems.length > 0) {
-			if( this.props.filterFunction) {
-				filteredData = dataItems.filter(this.props.filterFunction)
-			}else {
-				filteredData = dataItems.filter(this.defaultFilterFunction);
-			}
-		}
 	
-		this.setState({dataItems:filteredData});
-
-	}
-
-	defaultFilterFunction(item) {
-		console.log("item " + JSON.stringify(item));
-		if(item != undefined && item.hasOwnProperty(this.props.labelField)) {
-			if(String(item[this.props.labelField]).indexOf(this.state.searchString) >= 0) {
-				return item;
-			}	
-		}
-	}
 
 	renderDataItem(item) {
 	    return (
-	      <li className="list-group-item">
+	      <li className="list-group-item" key={item[this.props.labelField]}>
 	        {item[this.props.labelField]}
 	      </li>
 	    );
