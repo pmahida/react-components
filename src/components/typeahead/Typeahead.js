@@ -1,6 +1,8 @@
 import React, {Component, PropType} from 'react';
 import DataList from './DataList';
 
+import './Typeahead.less'
+
 const dataItems = [{label:'First',data:1},
 					{label:'Second',data:2},
 					{label:'Third',data:3},
@@ -65,7 +67,7 @@ export default class Typeahead extends Component {
 			<div className="dropdown">
 				<input ref="textInput" 
 					   type="text" 
-					   className="form-control" 
+					   className="form-control textInput" 
 					   onChange={this.handleChange.bind(this)} />
 
 				<DataList 

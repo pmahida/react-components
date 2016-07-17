@@ -29,11 +29,16 @@
   },
   "dependencies": {
     "babel-preset-stage-1": "^6.1.18",
+    "css-loader": "^0.23.1",
+    "jquery": "^2.2.4",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
     "lodash": "^3.10.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",
     "react-router": "^2.0.1",
-    "redux": "^3.0.4"
+    "redux": "^3.0.4",
+    "style-loader": "^0.13.1"
   }
 }
