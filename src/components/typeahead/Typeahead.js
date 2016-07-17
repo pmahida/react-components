@@ -20,6 +20,7 @@ export default class Typeahead extends Component {
 
 		this.state = {
 			searchString : "",
+			showDropdown:false,
 			dataItems:dataItems
 		}
 
@@ -33,7 +34,7 @@ export default class Typeahead extends Component {
 		if(searchString != undefined && searchString != "") {
 			this.filterDataItems();
 		}		
-		this.setState({searchString: searchString})
+		this.setState({searchString: searchString , showDropdown:true})
 	}
 
 	filterDataItems() {
@@ -61,9 +62,17 @@ export default class Typeahead extends Component {
 
 	render() {
 		return (
-			<div>
-				<input ref="textInput" type="text" className="form-control" onChange={this.handleChange.bind(this)} />
-				<DataList dataItems={this.state.dataItems} labelField="label" searchString={this.state.searchString} />
+			<div className="dropdown">
+				<input ref="textInput" 
+					   type="text" 
+					   className="form-control" 
+					   onChange={this.handleChange.bind(this)} />
+
+				<DataList 
+					    className={'dropdown-menu ' + (this.state.showDropdown ? 'show' :'')}   
+					    dataItems={this.state.dataItems} 
+					    labelField="label" 
+					    searchString={this.state.searchString} />
 			</div>
 		);
 	}
